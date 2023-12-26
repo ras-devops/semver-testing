@@ -27,13 +27,15 @@ jobs:
         working-directory: ${{env.working-directory}}
 
       - name: Tar files
-        run: tar -czvf ../application.tar.gz *
+        run: |
+          tar -czvf ../application.tar.gz *
+          cd ../ && pwd && ls -la
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: application
-          path: services/application.tar.gz
+          path: ./services/application.tar.gz
           retention-days: 5
 
     outputs:
