@@ -24,10 +24,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set short sha
-        id: sha_short
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
       - name: NPM install step
         run: |
           npm install
@@ -38,7 +34,7 @@ jobs:
         id: semantic
         with:
           tag_prefix: "v"
-          version_format: "${major}.${minor}.${patch}.${increment}"
+          version_format: "${major}.${minor}.${patch}"
           debug: true
 
       - name: Print Diagnostic Output
@@ -55,6 +51,7 @@ jobs:
         id: sha_and_tag
         run: |
           echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "git_tag=v${{ steps.semantic.outputs.version }}" >> $GITHUB_OUTPUT
           echo "git_version_tag=${{ steps.semantic.outputs.version_tag }}" >> $GITHUB_OUTPUT
 
@@ -71,6 +68,7 @@ jobs:
 
     outputs:
       sha: ${{ steps.sha_and_tag.outputs.sha }}
+      sha_short: ${{ steps.sha_and_tag.outputs.sha_short }}
       git_tag: ${{ steps.sha_and_tag.outputs.git_tag }}
 
   docker-build:
@@ -78,8 +76,9 @@ jobs:
     needs: npm-build
     env:
       working-directory: .
-      IMAGE_SHA: ${{ needs.npm-build.outputs.sha }}
-      IMAGE_TAG: ${{ needs.npm-build.outputs.git_tag }}
+      GIT_COMMIT: ${{ needs.npm-build.outputs.sha }}
+      GIT_COMMIT_SHORT: ${{ needs.npm-build.outputs.sha_short }}
+      IMAGE_GIT_TAG: ${{ needs.npm-build.outputs.git_tag }}
     permissions:
       packages: write
       contents: read
@@ -106,8 +105,9 @@ jobs:
           file: services/frontend/Dockerfile
           push: true
           tags: |
-            docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_SHA }}
+            docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.GIT_COMMIT }}
             docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_TAG }}
+            docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_TAG }}-${{ env.GIT_COMMIT_SHORT }}
 
 #       - name: Docker build and push
 #         uses: docker/build-push-action@v4
