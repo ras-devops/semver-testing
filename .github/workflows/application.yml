@@ -71,6 +71,21 @@ jobs:
         with:
           name: node-app
 
+      - name: Download a NPM artifact  node-app
+        uses: actions/download-artifact@v3
+        with:
+          name: node-app
+          path: application.tar.gz
+
+      - name: LS
+        run: ls -la
+
+      - name: Tar files
+        run: tar -xf application.tar.gz && rm ${{ matrix.services_upgrade }}.tar.gz
+
+      - name: LS
+        run: ls -la
+
       - name: Log in to GitHub Docker Registry
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
