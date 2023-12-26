@@ -43,6 +43,7 @@ jobs:
         run: |
           echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
           echo "git_tag=v${{ steps.semantic.outputs.version }}" >> $GITHUB_OUTPUT
+          echo "git_version_tag=v${{ steps.semantic.outputs.version_tag }}" >> $GITHUB_OUTPUT
 
       - name: Tar files
         run: |
