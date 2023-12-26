@@ -26,13 +26,15 @@ jobs:
           npm install
         working-directory: ${{env.working-directory}}
 
+      - name: Tar files
+        run: tar -czvf ../application.tar.gz ${{env.working-directory}}
+        working-directory: ${{env.working-directory}}
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
-          name: node-app
-          path: |
-            ${{env.working-directory}}
-            '!${{env.working-directory}}/gitignore'
+          name: application
+          path: services/application.tar.gz
           retention-days: 5
 
     outputs:
