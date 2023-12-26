@@ -62,6 +62,12 @@ jobs:
         with:
           name: node-app
 
+      - name: Set short sha
+        id: sha_short
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+          echo "git_tag=$(git tag)" >> $GITHUB_OUTPUT
+
       - name: Log in to GitHub Docker Registry
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
@@ -75,8 +81,10 @@ jobs:
           context: services/frontend/
           push: true
           tags: |
-            docker.pkg.github.com/${{ github.repository }}/frontend:${{ github.sha }}
-            docker.pkg.github.com/${{ github.repository }}/frontend:${{ github.event.release.tag_name }}
+#             docker.pkg.github.com/${{ github.repository }}/frontend:${{ github.sha }}
+            docker.pkg.github.com/${{ github.repository }}/frontend:${{ steps.sha_short.outputs.sha }}
+#             docker.pkg.github.com/${{ github.repository }}/frontend:${{ github.event.release.tag_name }}
+            docker.pkg.github.com/${{ github.repository }}/frontend:${{ steps.sha_short.outputs.git_tag }}
 
 #       - name: Docker build and push
 #         uses: docker/build-push-action@v4
