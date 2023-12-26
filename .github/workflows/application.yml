@@ -28,14 +28,13 @@ jobs:
 
       - name: Tar files
         run: |
-          tar -czvf ../application.tar.gz *
-          cd ../ && pwd && ls -la
+          tar -czvf application.tar.gz *
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: application
-          path: ../application.tar.gz
+          path: ./services/frontend/application.tar.gz
           retention-days: 5
 
     outputs:
