@@ -82,9 +82,7 @@ jobs:
           file: services/frontend/Dockerfile
           push: true
           tags: |
-#             docker.pkg.github.com/${{ github.repository }}/frontend:${{ github.sha }}
             docker.pkg.github.com/${{ github.repository }}/frontend:${{ steps.sha_short.outputs.sha }}
-#             docker.pkg.github.com/${{ github.repository }}/frontend:${{ github.event.release.tag_name }}
             docker.pkg.github.com/${{ github.repository }}/frontend:${{ steps.sha_short.outputs.git_tag }}
 
 #       - name: Docker build and push
