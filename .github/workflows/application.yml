@@ -2,11 +2,7 @@ name: 'Application'
 "on":
   push:
     branches:
-      - master
-      - next
       - main
-      - beta
-      - "*.x"
 
 jobs:
   npm-build:
@@ -26,6 +22,7 @@ jobs:
 
       - name: NPM install step
         run: |
+          npx -p node@v18-lts -c "npx semantic-release"
           npm install
         working-directory: ${{env.working-directory}}
 
@@ -35,17 +32,12 @@ jobs:
         with:
           tag_prefix: "v"
           version_format: "${major}.${minor}.${patch}"
-          debug: true
+          debug: false
 
       - name: Print Diagnostic Output
         run: echo "$DEBUG_OUTPUT"
         env:
           DEBUG_OUTPUT: ${{ steps.semantic.outputs.debug_output }}
-
-#       - uses: paulhatch/semantic-version@v5.3.0
-#         id: semantic
-#         with:
-#           tag_prefix: "v"
 
       - name: Set TAGS
         id: sha_and_tag
