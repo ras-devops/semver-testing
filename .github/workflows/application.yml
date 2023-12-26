@@ -27,8 +27,7 @@ jobs:
         working-directory: ${{env.working-directory}}
 
       - name: Tar files
-        run: tar -czvf ../application.tar.gz ${{env.working-directory}}
-        working-directory: ${{env.working-directory}}
+        run: tar -czvf ../application.tar.gz *
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
