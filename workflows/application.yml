@@ -1,8 +1,12 @@
 name: 'Application'
-on:
+"on":
   push:
-    paths:
-    - 'services/**'
+    branches:
+      - master
+      - next
+      - main
+      - beta
+      - "*.x"
 
 jobs:
   npm-build:
