@@ -65,6 +65,9 @@ jobs:
       working-directory: .
       IMAGE_SHA: ${{ needs.npm-build.outputs.sha }}
       IMAGE_TAG: ${{ needs.npm-build.outputs.git_tag }}
+    permissions:
+      packages: write
+      contents: read
     steps:
       - name: Download a NPM artifact
         uses: actions/download-artifact@v3
