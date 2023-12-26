@@ -34,6 +34,7 @@ jobs:
         working-directory: ${{env.working-directory}}
 
       - uses: paulhatch/semantic-version@v5.3.0
+        id: semantic
         with:
           tag_prefix: "v"
 
