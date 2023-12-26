@@ -41,7 +41,7 @@ jobs:
         id: sha_and_tag
         run: |
           echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-          echo "git_tag=v${{ steps.semantic.outputs.release-version }}" >> $GITHUB_OUTPUT
+          echo "git_tag=v${{ steps.semantic.outputs.version }}" >> $GITHUB_OUTPUT
 
       - name: Tar files
         run: |
