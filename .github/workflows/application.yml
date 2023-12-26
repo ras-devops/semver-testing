@@ -106,8 +106,8 @@ jobs:
           push: true
           tags: |
             docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.GIT_COMMIT }}
-            docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_TAG }}
-            docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_TAG }}-${{ env.GIT_COMMIT_SHORT }}
+            docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_GIT_TAG }}
+            docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_GIT_TAG }}-${{ env.GIT_COMMIT_SHORT }}
 
 #       - name: Docker build and push
 #         uses: docker/build-push-action@v4
