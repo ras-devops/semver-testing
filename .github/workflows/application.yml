@@ -75,8 +75,8 @@ jobs:
           context: services/frontend/
           push: true
           tags: |
-            docker.pkg.github.com/${{ github.repository }}/octo-image:${{ github.sha }}
-            docker.pkg.github.com/${{ github.repository }}/octo-image:${{ github.event.release.tag_name }}
+            docker.pkg.github.com/${{ github.repository }}/frontend:${{ github.sha }}
+            docker.pkg.github.com/${{ github.repository }}/frontend:${{ github.event.release.tag_name }}
 
 #       - name: Docker build and push
 #         uses: docker/build-push-action@v4
