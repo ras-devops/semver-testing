@@ -22,7 +22,7 @@ jobs:
 
       - name: NPM install step
         run: |
-          npx -p node@v18-lts -c "npx semantic-release"
+          nvm install 'lts/*' && npx semantic-release
           npm install
         working-directory: ${{env.working-directory}}
 
