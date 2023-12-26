@@ -24,6 +24,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set TAGS
+        id: sha_and_tag
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+          echo "git_tag=$(git tag)" >> $GITHUB_OUTPUT
+
       - name: Set short sha
         id: sha_short
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
@@ -49,24 +55,21 @@ jobs:
           retention-days: 5
 
     outputs:
-      sha_short: ${{ steps.sha_short.outputs.sha_short }}
+      sha: ${{ steps.sha_and_tag.outputs.sha }}
+      git_tag: ${{ steps.sha_and_tag.outputs.git_tag }}
 
   docker-build:
     runs-on: ubuntu-latest
     needs: npm-build
     env:
-       working-directory: .
+      working-directory: .
+      IMAGE_SHA: ${{ needs.npm-build.outputs.sha }}
+      IMAGE_TAG: ${{ needs.npm-build.outputs.git_tag }}
     steps:
       - name: Download a NPM artifact
         uses: actions/download-artifact@v3
         with:
           name: node-app
-
-      - name: Set short sha
-        id: sha_short
-        run: |
-          echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
-          echo "git_tag=$(git tag)" >> $GITHUB_OUTPUT
 
       - name: Log in to GitHub Docker Registry
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
@@ -82,8 +85,8 @@ jobs:
           file: services/frontend/Dockerfile
           push: true
           tags: |
-            docker.pkg.github.com/${{ github.repository }}/frontend:${{ steps.sha_short.outputs.sha }}
-            docker.pkg.github.com/${{ github.repository }}/frontend:${{ steps.sha_short.outputs.git_tag }}
+            docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_SHA }}
+            docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_TAG }}
 
 #       - name: Docker build and push
 #         uses: docker/build-push-action@v4
