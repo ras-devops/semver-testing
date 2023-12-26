@@ -33,17 +33,30 @@ jobs:
           npm install
         working-directory: ${{env.working-directory}}
 
-      - uses: paulhatch/semantic-version@v5.3.0
+      - name: Version
+        uses: paulhatch/semantic-version@v5.3.0
         id: semantic
         with:
           tag_prefix: "v"
+          version_format: "${major}.${minor}.${patch}.${increment}"
+          debug: true
+
+      - name: Print Diagnostic Output
+        run: echo "$DEBUG_OUTPUT"
+        env:
+          DEBUG_OUTPUT: ${{ steps.version.outputs.debug_output }}
+
+#       - uses: paulhatch/semantic-version@v5.3.0
+#         id: semantic
+#         with:
+#           tag_prefix: "v"
 
       - name: Set TAGS
         id: sha_and_tag
         run: |
           echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
           echo "git_tag=v${{ steps.semantic.outputs.version }}" >> $GITHUB_OUTPUT
-          echo "git_version_tag=v${{ steps.semantic.outputs.version_tag }}" >> $GITHUB_OUTPUT
+          echo "git_version_tag=${{ steps.semantic.outputs.version_tag }}" >> $GITHUB_OUTPUT
 
       - name: Tar files
         run: |
