@@ -22,7 +22,7 @@ jobs:
 
       - name: NPM install step
         run: |
-          nvm install 'lts/*' && npx semantic-release
+          npx semantic-release
           npm install
         working-directory: ${{env.working-directory}}
 
@@ -97,5 +97,6 @@ jobs:
           file: services/frontend/Dockerfile
           push: true
           tags: |
+            docker.pkg.github.com/${{ github.repository }}/frontend:latest
             docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.GIT_COMMIT }}
             docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_GIT_TAG }}-${{ env.GIT_COMMIT_SHORT }}
