@@ -22,7 +22,6 @@ jobs:
 
       - name: NPM install step
         run: |
-          npx semantic-release
           npm install
         working-directory: ${{env.working-directory}}
 
