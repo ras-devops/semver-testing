@@ -36,7 +36,7 @@ jobs:
           minor_pattern: "(MINOR)"
           minor_regexp_flags: "perf(.*)"
           debug: false
-          bump_each_commit: true
+          bump_each_commit: false
 
       - name: Print Diagnostic Output
         run: echo "$DEBUG_OUTPUT"
