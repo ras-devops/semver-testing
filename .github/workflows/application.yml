@@ -55,7 +55,7 @@ jobs:
         run: |
           tar -czvf application.tar.gz services/frontend/*
 
-      - name: Upload artifact for deployment job.
+      - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: node-app
