@@ -31,6 +31,10 @@ jobs:
         with:
           tag_prefix: "v"
           version_format: "${major}.${minor}.${patch}"
+          major_pattern: "(MAJOR)"
+          major_regexp_flags: "feat(.*)"
+          minor_pattern: "(MINOR)"
+          minor_regexp_flags: "perf(.*)"
           debug: false
           bump_each_commit: true
 
