@@ -35,7 +35,7 @@ jobs:
           major_regexp_flags: "feat(.*)"
           minor_pattern: "(MINOR)"
           minor_regexp_flags: "perf(.*)"
-          debug: false
+          debug: true
           bump_each_commit: false
 
       - name: Print Diagnostic Output
