@@ -43,7 +43,7 @@ jobs:
         env:
           DEBUG_OUTPUT: ${{ steps.semantic.outputs.debug_output }}
 
-      - name: Set TAGS
+      - name: Set TAGS...
         id: sha_and_tag
         run: |
           echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
