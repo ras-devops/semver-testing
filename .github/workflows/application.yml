@@ -51,7 +51,7 @@ jobs:
           echo "git_tag=v${{ steps.semantic.outputs.version }}" >> $GITHUB_OUTPUT
           echo "git_version_tag=${{ steps.semantic.outputs.version_tag }}" >> $GITHUB_OUTPUT
 
-      - name: Tar artifact files
+      - name: Tar files
         run: |
           tar -czvf application.tar.gz services/frontend/*
 
@@ -104,4 +104,4 @@ jobs:
             docker.pkg.github.com/${{ github.repository }}/frontend:latest
             docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.GIT_COMMIT }}
             docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_GIT_TAG }}-${{ env.GIT_COMMIT_SHORT }}
-            docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_GIT_TAG }}
+#            docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_GIT_TAG }}
