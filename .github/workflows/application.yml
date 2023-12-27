@@ -32,6 +32,7 @@ jobs:
           tag_prefix: "v"
           version_format: "${major}.${minor}.${patch}"
           debug: false
+          bump_each_commit: true
 
       - name: Print Diagnostic Output
         run: echo "$DEBUG_OUTPUT"
@@ -99,3 +100,4 @@ jobs:
             docker.pkg.github.com/${{ github.repository }}/frontend:latest
             docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.GIT_COMMIT }}
             docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_GIT_TAG }}-${{ env.GIT_COMMIT_SHORT }}
+            docker.pkg.github.com/${{ github.repository }}/frontend:${{ env.IMAGE_GIT_TAG }}
